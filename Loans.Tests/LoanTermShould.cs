@@ -42,7 +42,7 @@ namespace Loans.Tests
         {
             var a = new LoanTerm(1);
             var b = new LoanTerm(1);
-            Assert.That(a, Is.Not.EqualTo(b));
+            Assert.That(a, Is.EqualTo(b));
         }
 
         [Test]
@@ -61,6 +61,12 @@ namespace Loans.Tests
         {
             double a = 1.0 / 3.0;
             Assert.That(a, Is.EqualTo(0.33).Within(0.004));
+        }
+
+        [Test]
+        public void NotAllowZeroYears()
+        {
+            Assert.That(() => new LoanTerm(0), Throws.TypeOf<ArgumentOutOfRangeException>());
         }
 
        
