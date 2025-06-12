@@ -14,6 +14,7 @@ namespace Loans.Tests
         }
         
         [Test]
+        //[Ignore("Need to update work.")] //when you want to ignore a test and run others you can also at it at the class level
         public void ReturnLoanTermInMonths()
         {
             // System under test
@@ -67,6 +68,19 @@ namespace Loans.Tests
         public void NotAllowZeroYears()
         {
             Assert.That(() => new LoanTerm(0), Throws.TypeOf<ArgumentOutOfRangeException>());
+            
+            Assert.That(()=> new LoanTerm(0), Throws.TypeOf<ArgumentOutOfRangeException>().With.Property("Message").EqualTo("Please specify a value greater than 0. (Parameter 'years')"));
+            
+            //correct ex and para name but don't care about the message
+            Assert.That(()=> new LoanTerm(0), Throws.TypeOf<ArgumentOutOfRangeException>()
+                .With
+                .Property("ParamName")
+                .EqualTo("years"));
+            
+            Assert.That(() => new LoanTerm(0), Throws.TypeOf<ArgumentOutOfRangeException>()
+                .With
+                .Matches<ArgumentOutOfRangeException>(
+                    ex => ex.ParamName == "years"));
         }
 
        

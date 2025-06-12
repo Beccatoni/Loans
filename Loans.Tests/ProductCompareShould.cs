@@ -5,6 +5,7 @@ namespace Loans.Tests;
 public class ProductComparerShould
 {
     [Test]
+    [Category("Product Comparison")]
     public void ReturnCorrectNumberOfComparisons()
     {
         var products = new List<LoanProduct>
