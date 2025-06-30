@@ -14,7 +14,7 @@ namespace Loans.Tests
         }
         
         [Test]
-        //[Ignore("Need to update work.")] //when you want to ignore a test and run others you can also at it at the class level
+        //[Ignore("Need to update work.")] //when you want to ignore a test and run others, you can also at it at the class level
         public void ReturnLoanTermInMonths()
         {
             // System under test
@@ -26,8 +26,6 @@ namespace Loans.Tests
             
             //Assert
             Assert.That(sut.ToMonths(), Is.EqualTo(12));
-            
-            
         }
 
         [Test]
