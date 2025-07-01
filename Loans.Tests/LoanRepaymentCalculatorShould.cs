@@ -31,7 +31,18 @@ public class LoanRepaymentCalculatorShould
     [Test]
     [TestCaseSource(typeof(MonthlyRepaymentTestData), "TestCases")]
     
-    public decimal CalculateCorrectMonthlyRepayment_Centralized(decimal principal, decimal interestRate, int termInYears)
+    public void CalculateCorrectMonthlyRepayment_Centralized(decimal principal, decimal interestRate, int termInYears, decimal expectedMonthlyRepayment)
+    {
+        var sut = new LoanRepaymentCalculator();
+        var monthlyRepayment = sut.CalculateMonthlyRepayment(new LoanAmount("USD", principal), interestRate, new LoanTerm(termInYears));
+        
+        Assert.That(monthlyRepayment, Is.EqualTo(expectedMonthlyRepayment));
+    }
+    
+    [Test]
+    [TestCaseSource(typeof(MonthlyRepaymentTestDataWithReturn), "TestCases")]
+    
+    public decimal CalculateCorrectMonthlyRepayment_CentralizedWithReturn(decimal principal, decimal interestRate, int termInYears)
     {
         var sut = new LoanRepaymentCalculator();
         return sut.CalculateMonthlyRepayment(new LoanAmount("USD", principal), interestRate, new LoanTerm(termInYears));
