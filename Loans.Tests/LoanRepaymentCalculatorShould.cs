@@ -69,10 +69,39 @@ public class LoanRepaymentCalculatorShould
         [Values(100_000, 200_000, 500_000)]decimal principal, [Values(6.5, 10, 20)]decimal interestRate, [Values(10,20,30)]int termInYears
         )
     {
+        // here we don't need to assert because by default the Values attribute leads to creating test cases
         var sut = new LoanRepaymentCalculator();
 
         var monthlyRepayment = sut.CalculateMonthlyRepayment(
             new LoanAmount("USD", principal), interestRate, new LoanTerm(termInYears));
+    }
+    
+    // [Test]
+    // [Sequential]
+    // public void CalculateCorrectMonthlyRepayment_Sequential(
+    //     [Values(100_000, 200_000, 500_000)]decimal principal,
+    //     [Values(6.5, 10, 20)]decimal interestRate, 
+    //     [Values(10,20,30)]int termInYears,
+    //     [Values(1264.14, 1755.14, 4387.86)]decimal expectedMonthlyRepayment
+    // )
+    // {
+    //     var sut = new LoanRepaymentCalculator();
+    //
+    //     var monthlyRepayment = sut.CalculateMonthlyRepayment(
+    //         new LoanAmount("USD", principal), interestRate, new LoanTerm(termInYears));
+    //     
+    //     Assert.That(monthlyRepayment, Is.EqualTo(expectedMonthlyRepayment));
+    // }
+
+    [Test]
+    public void CalculateCorrectMonthlyRepayment_Range(
+        [Range(50_000, 1_000_000, 50_000)] decimal principal,
+        [Range(0.5, 20.00, 0.5)] decimal interestRate,
+        [Values(10, 20, 30)] int termInYears)
+    {
+        var sut = new LoanRepaymentCalculator();
+
+        sut.CalculateMonthlyRepayment(new LoanAmount("USD", principal), interestRate, new LoanTerm(termInYears));
     }
     
 }

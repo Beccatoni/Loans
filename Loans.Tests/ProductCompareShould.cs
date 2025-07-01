@@ -2,6 +2,7 @@ using Loans.Domain.Applications;
 
 namespace Loans.Tests;
 
+[ProductComparison]
 public class ProductComparerShould
 {
     private List<LoanProduct> products;
