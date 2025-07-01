@@ -49,9 +49,30 @@ public class LoanRepaymentCalculatorShould
         
         // Assert.That(monthlyRepayment, Is.EqualTo(expectedMonthlyRepayment));
     }
-
-
     
     
+    [Test]
+    [TestCaseSource(typeof(MonthlyRepaymentCsvData), "GetTestCases", new object[]{"Data.csv"})]
+    
+    public void CalculateCorrectMonthlyRepayment_Csv(decimal principal, decimal interestRate, int termInYears, decimal expectedMonthlyRepayment)
+    {
+        var sut = new LoanRepaymentCalculator();
+        var monthlyRepayment = sut.CalculateMonthlyRepayment(new LoanAmount("USD", principal), interestRate, new LoanTerm(termInYears));
+        
+        Assert.That(monthlyRepayment, Is.EqualTo(expectedMonthlyRepayment));
+    }
+
+
+
+    [Test]
+    public void CalculateCorrectMonthlyRepayment_Combinatorial(
+        [Values(100_000, 200_000, 500_000)]decimal principal, [Values(6.5, 10, 20)]decimal interestRate, [Values(10,20,30)]int termInYears
+        )
+    {
+        var sut = new LoanRepaymentCalculator();
+
+        var monthlyRepayment = sut.CalculateMonthlyRepayment(
+            new LoanAmount("USD", principal), interestRate, new LoanTerm(termInYears));
+    }
     
 }
